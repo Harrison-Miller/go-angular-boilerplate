@@ -6,3 +6,6 @@ ui/tmp
 ui/tsc-out
 
 ui/.vscode
+ui/src/app/api
+
+ui/.angular
