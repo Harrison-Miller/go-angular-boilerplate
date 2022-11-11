@@ -8,8 +8,8 @@ COPY go.sum .
 RUN go mod download
 
 COPY gen/proto/go gen/proto/go
-COPY cmd cmd
+COPY api api
 
-RUN go build -o /holopanel cmd/main.go
+RUN go build -o /api api/cmd/main.go
 
-CMD ["/holopanel"]
+CMD ["/api"]

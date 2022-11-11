@@ -1,0 +1,19 @@
+syntax = "proto3";
+package boilerplate.message.v1;
+import "google/api/annotations.proto";
+
+service MessageService {
+  rpc ListMessages(ListMessagesRequest) returns  (ListMessagesResponse) {
+    option (google.api.http) = {
+      get: "/v1/messages";
+    };
+  };
+}
+
+message ListMessagesRequest {
+
+}
+
+message ListMessagesResponse {
+  repeated string messages = 1;
+}

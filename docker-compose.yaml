@@ -12,7 +12,7 @@ services:
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
   swagger:
-    image: holopanel/swagger
+    image: boilerplate/swagger
     build:
       context: .
       dockerfile: swagger/Dockerfile
@@ -22,10 +22,10 @@ services:
       - traefik.http.routers.swagger.rule=Host(`swagger.localhost`)
       - traefik.http.services.swagger.loadbalancer.server.port=8080
   api:
-    image: holopanel/api
+    image: boilerplate/api
     build:
       context: .
-      dockerfile: cmd/Dockerfile
+      dockerfile: api/cmd/Dockerfile
     ports:
       - "8081:8081"
     labels:
@@ -34,7 +34,7 @@ services:
       - traefik.http.middlewares.api-cors.headers.accesscontrolalloworiginlist=*
       - traefik.http.routers.api.middlewares=api-stripprefix@docker,api-cors@docker
   ui:
-    image: holopanel/ui
+    image: boilerplate/ui
     build:
       context: .
       dockerfile: ui/Dockerfile

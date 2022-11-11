@@ -1,4 +1,4 @@
-module holopanel
+module boilerplate
 
 go 1.19
 
