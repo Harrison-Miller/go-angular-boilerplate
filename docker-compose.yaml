@@ -1,0 +1,35 @@
+version: "3"
+services:
+  traefik:
+    image: traefik
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+  swagger:
+    image: swaggerapi/swagger-ui
+    environment:
+      - SWAGGER_JSON=/apidocs.swagger.json
+    ports:
+      - "8082:8080"
+    volumes:
+      - ./gen/openapiv2/apidocs.swagger.json:/apidocs.swagger.json
+    labels:
+      - traefik.http.routers.swagger.rule=Host(`swagger.localhost`)
+      - traefik.http.services.swagger.loadbalancer.server.port=8080
+  holopanel:
+    image: holopanel
+    build:
+      context: .
+      dockerfile: cmd/Dockerfile
+    ports:
+      - "8081:8081"
+    labels:
+      - traefik.http.routers.api.rule=Host(`localhost`) && PathPrefix(`/api`)
+      - traefik.http.middlewares.api-stripprefix.stripprefix.prefixes=/api
+      - traefik.http.routers.api.middlewares=api-stripprefix@docker

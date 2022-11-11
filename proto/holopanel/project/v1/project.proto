@@ -1,0 +1,19 @@
+syntax = "proto3";
+package holopanel.project.v1;
+import "google/api/annotations.proto";
+
+service ProjectService {
+  rpc ListProjects(ListProjectsRequest) returns  (ListProjectsResponse) {
+    option (google.api.http) = {
+      get: "/v1/projects";
+    };
+  };
+}
+
+message ListProjectsRequest {
+
+}
+
+message ListProjectsResponse {
+  repeated string project_names = 1;
+}
