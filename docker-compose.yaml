@@ -12,18 +12,17 @@ services:
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
   swagger:
-    image: swaggerapi/swagger-ui
-    environment:
-      - SWAGGER_JSON=/apidocs.swagger.json
+    image: holopanel/swagger
+    build:
+      context: .
+      dockerfile: swagger/Dockerfile
     ports:
       - "8082:8080"
-    volumes:
-      - ./gen/openapiv2/apidocs.swagger.json:/apidocs.swagger.json
     labels:
       - traefik.http.routers.swagger.rule=Host(`swagger.localhost`)
       - traefik.http.services.swagger.loadbalancer.server.port=8080
-  holopanel:
-    image: holopanel
+  api:
+    image: holopanel/api
     build:
       context: .
       dockerfile: cmd/Dockerfile
@@ -33,3 +32,12 @@ services:
       - traefik.http.routers.api.rule=Host(`localhost`) && PathPrefix(`/api`)
       - traefik.http.middlewares.api-stripprefix.stripprefix.prefixes=/api
       - traefik.http.routers.api.middlewares=api-stripprefix@docker
+  ui:
+    image: holopanel/ui
+    build:
+      context: .
+      dockerfile: ui/Dockerfile
+    ports:
+      - "8083:80"
+    labels:
+      - traefik.http.routers.ui.rule=Host(`localhost`)

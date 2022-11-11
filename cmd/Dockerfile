@@ -7,7 +7,8 @@ COPY go.sum .
 
 RUN go mod download
 
-COPY . .
+COPY gen/proto/go gen/proto/go
+COPY cmd cmd
 
 RUN go build -o /holopanel cmd/main.go
 
