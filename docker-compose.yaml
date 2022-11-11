@@ -31,7 +31,8 @@ services:
     labels:
       - traefik.http.routers.api.rule=Host(`localhost`) && PathPrefix(`/api`)
       - traefik.http.middlewares.api-stripprefix.stripprefix.prefixes=/api
-      - traefik.http.routers.api.middlewares=api-stripprefix@docker
+      - traefik.http.middlewares.api-cors.headers.accesscontrolalloworiginlist=*
+      - traefik.http.routers.api.middlewares=api-stripprefix@docker,api-cors@docker
   ui:
     image: holopanel/ui
     build:

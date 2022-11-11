@@ -3,10 +3,11 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --watch --poll 250",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "generate": "ng-swagger-gen --input ../gen/openapiv2/apidocs.swagger.json --output src/app/api"
   },
   "private": true,
   "dependencies": {
