@@ -7,7 +7,7 @@ Before you get started you should rename anything that says 'boilerplate' with y
 
 * Make sure to rename the go module to the github address of your project.
 * Docker image names in docker-compose (though these are just used for development)
-* default package name in buf.gen.yaml should be the <go module>/gen/proto/go
+* default package name in buf.gen.yaml should be the `<go module>/gen/proto/go`
 
 ## Install dependencies and tools
 Have docker installed
